@@ -1,0 +1,152 @@
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { authService } from '../services/auth.service';
+
+export default function RegisterForm() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({ nombre: '', email: '', password: '', confirmPassword: '' });
+  const [errors, setErrors] = useState<{ nombre?: string; email?: string; password?: string; confirmPassword?: string; general?: string }>({});
+  const [loading, setLoading] = useState(false);
+
+  const validate = () => {
+    const newErrors: typeof errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formData.nombre || formData.nombre.trim().length < 3) {
+      newErrors.nombre = 'El nombre debe tener al menos 3 caracteres.';
+    }
+
+    if (!formData.email) {
+      newErrors.email = 'El correo es requerido.';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Formato de correo no válido.';
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'La contraseña es requerida.';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Mínimo 6 caracteres.';
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Las contraseñas no coinciden.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    setLoading(true);
+    setErrors({});
+
+    try {
+      await authService.register(formData.nombre, formData.email, formData.password);
+      alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+      router.push('/login');
+    } catch (error: any) {
+      setErrors({ general: error.message || 'Error al registrarse' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form noValidate onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md space-y-4">
+      <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">Crear Cuenta</h2>
+      
+      {errors.general && (
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-2 rounded text-sm">
+          {errors.general}
+        </div>
+      )}
+
+      <div>
+        <label htmlFor="nombre" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">
+          Nombre completo
+        </label>
+        <input
+          id="nombre"
+          type="text"
+          value={formData.nombre}
+          onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+          className={`w-full p-2 border rounded-md dark:bg-gray-700 dark:text-white ${
+            errors.nombre ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+          }`}
+          placeholder="Juan Pérez"
+        />
+        {errors.nombre && <p className="text-red-500 text-xs mt-1">{errors.nombre}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">
+          Correo electrónico
+        </label>
+        <input
+          id="email"
+          type="email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          className={`w-full p-2 border rounded-md dark:bg-gray-700 dark:text-white ${
+            errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+          }`}
+          placeholder="tu@correo.com"
+        />
+        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">
+          Contraseña
+        </label>
+        <input
+          id="password"
+          type="password"
+          value={formData.password}
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          className={`w-full p-2 border rounded-md dark:bg-gray-700 dark:text-white ${
+            errors.password ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+          }`}
+          placeholder="••••••••"
+        />
+        {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">
+          Confirmar contraseña
+        </label>
+        <input
+          id="confirmPassword"
+          type="password"
+          value={formData.confirmPassword}
+          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+          className={`w-full p-2 border rounded-md dark:bg-gray-700 dark:text-white ${
+            errors.confirmPassword ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+          }`}
+          placeholder="••••••••"
+        />
+        {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+      </div>
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-md hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {loading ? 'Registrando...' : 'Crear Cuenta'}
+      </button>
+
+      <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+        ¿Ya tienes cuenta?{' '}
+        <a href="/login" className="text-red-600 hover:underline font-medium">
+          Inicia sesión
+        </a>
+      </p>
+    </form>
+  );
+}
