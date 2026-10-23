@@ -15,14 +15,15 @@ export default function EscuderiaGrid() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1); // ✅ NUEVO
 
   useEffect(() => {
     const fetchEscuderias = async () => {
       try {
         setLoading(true);
-        // skipAuth: true porque el catálogo es público
         const response = await apiRequest(`/escuderias?page=${page}&limit=4`, { skipAuth: true });
         setEscuderias(response.data);
+        setTotalPages(response.pagination?.totalPages || 1); // ✅ Guardar total de páginas
       } catch (err: any) {
         setError('No se pudo cargar el catálogo. Verifica que el backend esté corriendo.');
       } finally {
@@ -46,7 +47,6 @@ export default function EscuderiaGrid() {
         Catálogo de Escuderías 2025
       </h1>
       
-      {/* Responsive: 1 col (móvil), 2 cols (tablet), 3 cols (desktop pequeño), 4 cols (desktop grande) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {escuderias.map((esc) => (
           <article 
@@ -64,7 +64,7 @@ export default function EscuderiaGrid() {
         ))}
       </div>
       
-      {/* Controles de Paginación */}
+      {/* Controles de Paginación MEJORADOS */}
       <div className="flex justify-center gap-4 mt-10">
         <button 
           onClick={() => setPage(p => Math.max(1, p - 1))} 
@@ -73,12 +73,15 @@ export default function EscuderiaGrid() {
         >
           Anterior
         </button>
+        
         <span className="px-4 py-2 text-gray-700 dark:text-gray-300 font-medium">
-          Página {page}
+          Página {page} de {totalPages}
         </span>
+        
         <button 
           onClick={() => setPage(p => p + 1)} 
-          className="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+          disabled={page >= totalPages} // ✅ Deshabilitar si estamos en la última página
+          className="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 dark:hover:bg-gray-600 transition"
         >
           Siguiente
         </button>
