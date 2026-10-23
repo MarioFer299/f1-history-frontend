@@ -7,26 +7,27 @@ interface RequestOptions extends RequestInit {
 export async function apiRequest(endpoint: string, options: RequestOptions = {}) {
   const { skipAuth, headers, ...restOptions } = options;
   
-  // Obtener token del localStorage
+  // 1. Obtener token del localStorage (solo en el navegador)
   const token = typeof window !== 'undefined' ? localStorage.getItem('f1_token') : null;
 
-  // Construir headers
+  // 2. Construir headers
   const customHeaders: HeadersInit = {
     'Content-Type': 'application/json',
     ...headers,
   };
 
+  // 3. Agregar token si existe y no se indica saltar autenticación
   if (token && !skipAuth) {
     customHeaders['Authorization'] = `Bearer ${token}`;
   }
 
-  // Hacer la petición
+  // 4. Hacer la petición
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...restOptions,
     headers: customHeaders,
   });
 
-  // Manejo del 401 (sesión expirada)
+  // 5. Manejo centralizado de sesión expirada (401)
   if (response.status === 401) {
     localStorage.removeItem('f1_token');
     localStorage.removeItem('f1_user');
@@ -36,7 +37,7 @@ export async function apiRequest(endpoint: string, options: RequestOptions = {})
     throw new Error('Sesión expirada. Por favor, inicia sesión nuevamente.');
   }
 
-  // Manejo de otros errores
+  // 6. Manejo de otros errores
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.error || `Error HTTP: ${response.status}`);
