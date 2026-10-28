@@ -18,7 +18,7 @@ export function NewsletterForm() {
         method: 'POST',
         body: JSON.stringify({ 
           type: 'newsletter', 
-          message: `Nombre: ${name} | Pregunta: ${message}` // Guardamos todo en el campo message de la BD
+          message: `Nombre: ${name} | Email: ${email} | Pregunta: ${message}`
         }),
       });
       setStatus('success');
@@ -33,50 +33,50 @@ export function NewsletterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 p-6 md:p-8 rounded-xl shadow-lg space-y-4 text-left">
+    <form onSubmit={handleSubmit} className="bg-gray-800 dark:bg-gray-900 p-8 rounded-xl shadow-2xl border border-gray-700 max-w-2xl mx-auto">
       {status === 'success' && (
-        <div className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 p-3 rounded-lg text-center font-semibold">
-          ¡Gracias por suscribirte a la comunidad F1!
+        <div className="bg-green-900/30 border border-green-600 text-green-400 p-4 rounded-lg mb-6 text-center">
+          ¡Gracias por suscribirte!
         </div>
       )}
       {status === 'error' && (
-        <div className="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 p-3 rounded-lg text-center font-semibold">
-          Error al enviar. Asegúrate de haber iniciado sesión.
+        <div className="bg-red-900/30 border border-red-600 text-red-400 p-4 rounded-lg mb-6 text-center">
+          Error al enviar. Inicia sesión.
         </div>
       )}
 
-      <div>
-        <label className="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-300">Nombre completo</label>
+      <div className="mb-5">
+        <label className="block text-sm font-semibold mb-2 text-gray-300">Nombre completo</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition"
+          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-red-600 outline-none"
           placeholder="Ej: Mario Fernandez"
         />
       </div>
 
-      <div>
-        <label className="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-300">Correo electrónico</label>
+      <div className="mb-5">
+        <label className="block text-sm font-semibold mb-2 text-gray-300">Correo electrónico</label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition"
+          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-red-600 outline-none"
           placeholder="tu@correo.com"
         />
       </div>
 
-      <div>
-        <label className="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-300">¿Cuál es tu escudería favorita y por qué?</label>
+      <div className="mb-6">
+        <label className="block text-sm font-semibold mb-2 text-gray-300">¿Cuál es tu escudería favorita y por qué?</label>
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           required
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition"
-          rows={3}
+          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-red-600 outline-none"
+          rows={4}
           placeholder="Me encanta McLaren porque..."
         />
       </div>
@@ -84,16 +84,10 @@ export function NewsletterForm() {
       <button 
         type="submit" 
         disabled={loading}
-        className="w-full bg-red-600 text-white font-bold py-3 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-md"
+        className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg transition disabled:opacity-50"
       >
         {loading ? 'Enviando...' : 'Suscribirme'}
       </button>
-      
-      {!status && (
-        <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-2">
-          * Debes haber iniciado sesión para enviar el formulario.
-        </p>
-      )}
     </form>
   );
 }

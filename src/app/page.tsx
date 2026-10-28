@@ -1,19 +1,12 @@
 'use client';
 import { useTeams } from '@/features/teams/hooks/useTeams';
 import { TeamCard } from '@/features/teams/components/TeamCard';
-import { useState, useEffect } from 'react';
-import { NewsletterForm } from '@/features/interactions/components/NewsletterForm';
+import { useState } from 'react';
 
 export default function Home() {
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState<'all' | 'top5'>('all');
   const { data, loading, error } = useTeams(page);
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    if (darkMode) document.documentElement.classList.add('dark');
-    else document.documentElement.classList.remove('dark');
-  }, [darkMode]);
 
   const displayedTeams = filter === 'top5' && data ? data.data.slice(0, 5) : data?.data || [];
 
@@ -32,13 +25,7 @@ export default function Home() {
             Ver Escuderías
           </a>
         </div>
-        <button 
-          onClick={() => setDarkMode(!darkMode)}
-          className="absolute top-6 right-6 bg-black/20 hover:bg-black/40 p-3 rounded-full transition text-2xl"
-          aria-label="Cambiar modo oscuro"
-        >
-          {darkMode ? '☀️' : '🌙'}
-        </button>
+        {/* Botón flotante ELIMINADO */}
       </section>
 
       {/* SECCIÓN ESCUDERÍAS */}
@@ -97,15 +84,6 @@ export default function Home() {
             )}
           </>
         )}
-      </section>
-
-      {/* SECCIÓN COMUNIDAD / BOLETÍN */}
-      <section className="bg-gray-100 dark:bg-gray-800 py-16 px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-3">Únete a la Comunidad</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-8">Recibe noticias y análisis de la F1 cada semana.</p>
-          <NewsletterForm />
-        </div>
       </section>
 
       {/* FOOTER */}

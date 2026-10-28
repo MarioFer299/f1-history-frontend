@@ -10,7 +10,8 @@ export function useAuth() {
   const router = useRouter();
 
   useEffect(() => {
-    setUser(authService.getCurrentUser());
+    const currentUser = authService.getCurrentUser();
+    setUser(currentUser);
     setLoading(false);
   }, []);
 
@@ -20,7 +21,7 @@ export function useAuth() {
     localStorage.setItem('user', JSON.stringify(res.user));
     setUser(res.user);
     router.push('/');
-    router.refresh();
+    router.refresh(); // Esto fuerza la actualización del navbar
   };
 
   const register = async (name: string, email: string, password: string) => {
@@ -29,13 +30,13 @@ export function useAuth() {
     localStorage.setItem('user', JSON.stringify(res.user));
     setUser(res.user);
     router.push('/');
-    router.refresh();
+    router.refresh(); // Esto fuerza la actualización del navbar
   };
 
   const logout = () => {
     authService.logout();
     setUser(null);
-    router.push('/login');
+    router.push('/');
     router.refresh();
   };
 
