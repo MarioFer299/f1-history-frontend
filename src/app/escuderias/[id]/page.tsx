@@ -2,6 +2,9 @@
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
+// ESTA LÍNEA ES LA QUE ARREGLA EL ERROR DE BUILD EN NEXT.JS 15/16
+export const dynamic = 'force-dynamic';
+
 const teams = [
   {
     id: 'mclaren',
