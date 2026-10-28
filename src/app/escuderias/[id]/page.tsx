@@ -1,9 +1,4 @@
-'use client';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
-
-// ESTA LÍNEA ES LA QUE ARREGLA EL ERROR DE BUILD EN NEXT.JS 15/16
-export const dynamic = 'force-dynamic';
 
 const teams = [
   {
@@ -212,9 +207,9 @@ const teams = [
   },
 ];
 
-export default function TeamDetailPage() {
-  const params = useParams();
-  const teamId = params.id as string;
+// Next.js 15+: params es una Promesa en Server Components
+export default async function TeamDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: teamId } = await params;
   const team = teams.find(t => t.id === teamId);
 
   if (!team) {
