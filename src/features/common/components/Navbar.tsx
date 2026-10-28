@@ -53,28 +53,10 @@ export function Navbar() {
         
         <div className="hidden md:flex items-center gap-6">
           <Link href="/" className="hover:text-red-500 transition">Inicio</Link>
-          
-          <div className="relative group">
-            <button className="hover:text-red-500 transition flex items-center gap-1">
-              Pilotos <span>▼</span>
-            </button>
-          </div>
-          
-          <div className="relative group">
-            <button className="hover:text-red-500 transition flex items-center gap-1">
-              Escuderías <span>▼</span>
-            </button>
-          </div>
-          
-          <div className="relative group">
-            <button className="hover:text-red-500 transition flex items-center gap-1">
-              Historia <span>▼</span>
-            </button>
-          </div>
-          
-          <Link href="#contacto" className="hover:text-red-500 transition">
-            Contacto
-          </Link>
+          <Link href="/pilotos" className="hover:text-red-500 transition">Pilotos</Link>
+          <Link href="/#escuderias" className="hover:text-red-500 transition">Escuderías</Link>
+          <Link href="/historia" className="hover:text-red-500 transition">Historia</Link>
+          <Link href="/contacto" className="hover:text-red-500 transition">Contacto</Link>
 
           {user ? (
             <>
