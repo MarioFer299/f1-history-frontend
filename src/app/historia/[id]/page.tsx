@@ -3,16 +3,16 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
 const teamLogos: Record<string, string> = {
-  'mclaren': 'https://upload.wikimedia.org/wikipedia/en/thumb/6/67/McLaren_Racing_logo.svg/1200px-McLaren_Racing_logo.svg.png',
-  'ferrari': 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c6/Scuderia_Ferrari_Logo.svg/1200px-Scuderia_Ferrari_Logo.svg.png',
-  'redbull': 'https://upload.wikimedia.org/wikipedia/en/thumb/6/62/Red_Bull_Racing_logo.svg/1200px-Red_Bull_Racing_logo.svg.png',
-  'mercedes': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes_AMG_Petronas_F1_Team_Logo.svg/1200px-Mercedes_AMG_Petronas_F1_Team_Logo.svg.png',
-  'aston-martin': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Aston_Martin_F1_Team_logo.svg/1200px-Aston_Martin_F1_Team_logo.svg.png',
-  'alpine': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Alpine_F1_Team_Logo.svg/1200px-Alpine_F1_Team_Logo.svg.png',
-  'haas': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Haas_F1_Team_logo.svg/1200px-Haas_F1_Team_logo.svg.png',
-  'rb': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Visa_Cash_App_RB_Formula_One_Team_Logo.svg/1200px-Visa_Cash_App_RB_Formula_One_Team_Logo.svg.png',
-  'williams': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Williams_Racing_logo.svg/1200px-Williams_Racing_logo.svg.png',
-  'sauber': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Kick_Sauber_F1_Team_logo.svg/1200px-Kick_Sauber_F1_Team_logo.svg.png',
+  'mclaren': '/imagenes/teams/mclaren.jpg',
+  'ferrari': '/imagenes/teams/ferrari.jpg',
+  'redbull': '/imagenes/teams/redbull.jpg',
+  'mercedes': '/imagenes/teams/mercedes.jpg',
+  'aston-martin': '/imagenes/teams/aston-martin.jpg',
+  'alpine': '/imagenes/teams/alpine.jpg',
+  'haas': '/imagenes/teams/haas.jpg',
+  'rb': '/imagenes/teams/racing-bulls.jpg',
+  'williams': '/imagenes/teams/williams.jpg',
+  'sauber': '/imagenes/teams/sauber.jpg',
 };
 
 interface TeamHistory {
@@ -222,10 +222,10 @@ export default function TeamHistoryPage() {
           ← Volver a historia
         </Link>
 
-        {/* Header con logo */}
+        {/* Header CON LOGO VISIBLE */}
         <div className="mb-8">
           <div className="bg-[#1a1f2e] p-8 rounded-xl border-l-4 flex items-center gap-6" style={{ borderColor: team.color }}>
-            <div className="bg-[#0a0e1a] rounded-lg p-4 h-32 w-32 flex items-center justify-center flex-shrink-0">
+            <div className="bg-[#0a0e1a] rounded-lg p-6 h-32 w-40 flex items-center justify-center flex-shrink-0">
               <img 
                 src={teamLogos[team.id]} 
                 alt={`${team.name} logo`} 
@@ -241,7 +241,6 @@ export default function TeamHistoryPage() {
           </div>
         </div>
 
-        {/* Datos de la escudería */}
         <div className="grid grid-cols-3 gap-4 mb-12">
           <div className="bg-[#1a1f2e] p-6 rounded-lg border-t-4" style={{ borderColor: team.color }}>
             <strong className="block text-sm text-gray-400 mb-2">Fundación</strong>
@@ -253,11 +252,10 @@ export default function TeamHistoryPage() {
           </div>
           <div className="bg-[#1a1f2e] p-6 rounded-lg border-t-4" style={{ borderColor: team.color }}>
             <strong className="block text-sm text-gray-400 mb-2">Campeonatos</strong>
-            <span className="text-2xl font-bold">🏆 {team.championships}</span>
+            <span className="text-2xl font-bold"> {team.championships}</span>
           </div>
         </div>
 
-        {/* Biografía */}
         <section className="mb-12">
           <h2 className="text-3xl font-bold mb-6" style={{ color: team.color }}>Biografía</h2>
           <div className="bg-[#1a1f2e] p-8 rounded-lg">
@@ -265,7 +263,6 @@ export default function TeamHistoryPage() {
           </div>
         </section>
 
-        {/* Historia cronológica */}
         <section className="mb-12">
           <h2 className="text-3xl font-bold mb-6" style={{ color: team.color }}>Historia</h2>
           <div className="space-y-4">
@@ -285,7 +282,6 @@ export default function TeamHistoryPage() {
           </div>
         </section>
 
-        {/* Logros */}
         <section>
           <h2 className="text-3xl font-bold mb-6" style={{ color: team.color }}>Logros Destacados</h2>
           <div className="bg-[#1a1f2e] p-8 rounded-lg border-l-4" style={{ borderColor: team.color }}>
@@ -294,7 +290,6 @@ export default function TeamHistoryPage() {
         </section>
       </div>
 
-      {/* Footer */}
       <footer className="bg-[#1a1f2e] py-8 text-center text-gray-400 mt-16">
         <p>© 2026 F1 History. Proyecto académico de Desarrollo Web.</p>
       </footer>

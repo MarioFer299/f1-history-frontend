@@ -1,80 +1,58 @@
 'use client';
 import Link from 'next/link';
 
-// Logos oficiales de los equipos
 const teamLogos: Record<string, string> = {
-  'mclaren': 'https://upload.wikimedia.org/wikipedia/en/thumb/6/67/McLaren_Racing_logo.svg/1200px-McLaren_Racing_logo.svg.png',
-  'ferrari': 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c6/Scuderia_Ferrari_Logo.svg/1200px-Scuderia_Ferrari_Logo.svg.png',
-  'redbull': 'https://upload.wikimedia.org/wikipedia/en/thumb/6/62/Red_Bull_Racing_logo.svg/1200px-Red_Bull_Racing_logo.svg.png',
-  'mercedes': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes_AMG_Petronas_F1_Team_Logo.svg/1200px-Mercedes_AMG_Petronas_F1_Team_Logo.svg.png',
-  'aston-martin': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Aston_Martin_F1_Team_logo.svg/1200px-Aston_Martin_F1_Team_logo.svg.png',
-  'alpine': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Alpine_F1_Team_Logo.svg/1200px-Alpine_F1_Team_Logo.svg.png',
-  'haas': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Haas_F1_Team_logo.svg/1200px-Haas_F1_Team_logo.svg.png',
-  'rb': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Visa_Cash_App_RB_Formula_One_Team_Logo.svg/1200px-Visa_Cash_App_RB_Formula_One_Team_Logo.svg.png',
-  'williams': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Williams_Racing_logo.svg/1200px-Williams_Racing_logo.svg.png',
-  'sauber': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Kick_Sauber_F1_Team_logo.svg/1200px-Kick_Sauber_F1_Team_logo.svg.png',
+  'mclaren': '/imagenes/teams/mclaren.jpg',
+  'ferrari': '/imagenes/teams/ferrari.jpg',
+  'redbull': '/imagenes/teams/redbull.jpg',
+  'mercedes': '/imagenes/teams/mercedes.jpg',
+  'aston-martin': '/imagenes/teams/aston-martin.jpg',
+  'alpine': '/imagenes/teams/alpine.jpg',
+  'haas': '/imagenes/teams/haas.jpg',
+  'rb': '/imagenes/teams/racing-bulls.jpg',
+  'williams': '/imagenes/teams/williams.jpg',
+  'sauber': '/imagenes/teams/sauber.jpg',
 };
 
-// Datos de las escuderías con resumen de historia
 const teams = [
   {
-    id: 'mclaren',
-    name: 'McLaren Formula 1 Team',
-    color: '#FF8700',
+    id: 'mclaren', name: 'McLaren Formula 1 Team', color: '#FF8700',
     summary: 'Fundada en 1963 por Bruce McLaren. 9 campeonatos de constructores y 12 de pilotos. Campeón de constructores 2025.'
   },
   {
-    id: 'ferrari',
-    name: 'Scuderia Ferrari HP',
-    color: '#DC0000',
+    id: 'ferrari', name: 'Scuderia Ferrari HP', color: '#DC0000',
     summary: 'Fundada en 1950 por Enzo Ferrari. El equipo más antiguo y exitoso de la F1 con 16 campeonatos de constructores.'
   },
   {
-    id: 'redbull',
-    name: 'Oracle Red Bull Racing',
-    color: '#0600EF',
+    id: 'redbull', name: 'Oracle Red Bull Racing', color: '#0600EF',
     summary: 'Fundada en 2005 tras comprar Jaguar Racing. 6 campeonatos de constructores. Dominó con Vettel (2010-2013) y Verstappen (2021-2024).'
   },
   {
-    id: 'mercedes',
-    name: 'Mercedes-AMG PETRONAS',
-    color: '#00D2BE',
+    id: 'mercedes', name: 'Mercedes-AMG PETRONAS', color: '#00D2BE',
     summary: 'Regresó a la F1 en 2010 tras comprar Brawn GP. 8 campeonatos de constructores consecutivos (2014-2021).'
   },
   {
-    id: 'williams',
-    name: 'Williams Racing',
-    color: '#005AFF',
+    id: 'williams', name: 'Williams Racing', color: '#005AFF',
     summary: 'Fundada en 1977 por Frank Williams. 9 campeonatos de constructores en su era dorada (1980-1997).'
   },
   {
-    id: 'rb',
-    name: 'Visa Cash App RB',
-    color: '#6692FF',
+    id: 'rb', name: 'Visa Cash App RB', color: '#6692FF',
     summary: 'Fundada en 2006 como Toro Rosso. Equipo junior de Red Bull. Cuna de Vettel, Verstappen y Ricciardo.'
   },
   {
-    id: 'aston-martin',
-    name: 'Aston Martin Aramco',
-    color: '#006F62',
+    id: 'aston-martin', name: 'Aston Martin Aramco', color: '#006F62',
     summary: 'Renacimiento en 2021 tras el rebranding de Racing Point. Múltiples podios con Fernando Alonso desde 2023.'
   },
   {
-    id: 'haas',
-    name: 'MoneyGram Haas F1 Team',
-    color: '#B6BABD',
+    id: 'haas', name: 'MoneyGram Haas F1 Team', color: '#B6BABD',
     summary: 'Fundada en 2016 por Gene Haas. Primer equipo estadounidense en F1 en más de 30 años.'
   },
   {
-    id: 'sauber',
-    name: 'Stake F1 Team Kick Sauber',
-    color: '#52E252',
+    id: 'sauber', name: 'Stake F1 Team Kick Sauber', color: '#52E252',
     summary: 'Fundada en 1993 por Peter Sauber. Se convertirá en el equipo oficial de Audi a partir de 2026.'
   },
   {
-    id: 'alpine',
-    name: 'Alpine F1 Team',
-    color: '#0090FF',
+    id: 'alpine', name: 'Alpine F1 Team', color: '#0090FF',
     summary: 'Renacimiento en 2021 tras el rebranding de Renault. Raíces en Toleman (1981) y Benetton (campeón con Schumacher).'
   },
 ];
@@ -88,7 +66,6 @@ export default function HistoriaPage() {
           Conoce la historia de cada equipo que compite en la Fórmula 1.
         </p>
 
-        {/* Grid de escuderías */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {teams.map((team) => (
             <Link
@@ -98,8 +75,8 @@ export default function HistoriaPage() {
               style={{ borderColor: team.color }}
             >
               <div className="flex items-center gap-4 mb-4">
-                {/* Logo */}
-                <div className="bg-[#0a0e1a] rounded-lg p-3 h-20 w-20 flex items-center justify-center flex-shrink-0">
+                {/* LOGO - AHORA SE VE COMPLETO */}
+                <div className="bg-[#0a0e1a] rounded-lg p-4 h-28 w-32 flex items-center justify-center flex-shrink-0">
                   <img 
                     src={teamLogos[team.id]} 
                     alt={`${team.name} logo`} 
@@ -125,7 +102,6 @@ export default function HistoriaPage() {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="bg-[#1a1f2e] py-8 text-center text-gray-400 mt-16">
         <p>© 2026 F1 History. Proyecto académico de Desarrollo Web.</p>
       </footer>

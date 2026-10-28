@@ -2,11 +2,9 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export function LoginForm() {
   const { login } = useAuth();
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,7 +16,7 @@ export function LoginForm() {
     setLoading(true);
     try {
       await login(email, password);
-      router.refresh(); // Fuerza la recarga para actualizar el navbar
+      // La redirección y actualización las hace useAuth automáticamente
     } catch (err: any) {
       setError(err.message || 'Error al iniciar sesión');
     } finally {
@@ -39,9 +37,7 @@ export function LoginForm() {
         )}
         
         <div className="mb-5">
-          <label className="block text-sm font-semibold mb-2 text-gray-300">
-            Correo electrónico
-          </label>
+          <label className="block text-sm font-semibold mb-2 text-gray-300">Correo electrónico</label>
           <input
             type="email"
             value={email}
@@ -53,9 +49,7 @@ export function LoginForm() {
         </div>
         
         <div className="mb-6">
-          <label className="block text-sm font-semibold mb-2 text-gray-300">
-            Contraseña
-          </label>
+          <label className="block text-sm font-semibold mb-2 text-gray-300">Contraseña</label>
           <input
             type="password"
             value={password}

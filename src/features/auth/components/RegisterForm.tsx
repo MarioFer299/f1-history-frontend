@@ -2,11 +2,10 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
-export function RegisterForm() {
+// ⚠️ DEBE DECIR "export default function"
+export default function RegisterForm() {
   const { register } = useAuth();
-  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +18,6 @@ export function RegisterForm() {
     setLoading(true);
     try {
       await register(name, email, password);
-      router.refresh(); // Fuerza la recarga para actualizar el navbar
     } catch (err: any) {
       setError(err.message || 'Error al registrarse');
     } finally {
@@ -40,9 +38,7 @@ export function RegisterForm() {
         )}
         
         <div className="mb-5">
-          <label className="block text-sm font-semibold mb-2 text-gray-300">
-            Nombre completo
-          </label>
+          <label className="block text-sm font-semibold mb-2 text-gray-300">Nombre completo</label>
           <input
             type="text"
             value={name}
@@ -54,9 +50,7 @@ export function RegisterForm() {
         </div>
         
         <div className="mb-5">
-          <label className="block text-sm font-semibold mb-2 text-gray-300">
-            Correo electrónico
-          </label>
+          <label className="block text-sm font-semibold mb-2 text-gray-300">Correo electrónico</label>
           <input
             type="email"
             value={email}
@@ -68,9 +62,7 @@ export function RegisterForm() {
         </div>
         
         <div className="mb-6">
-          <label className="block text-sm font-semibold mb-2 text-gray-300">
-            Contraseña
-          </label>
+          <label className="block text-sm font-semibold mb-2 text-gray-300">Contraseña</label>
           <input
             type="password"
             value={password}

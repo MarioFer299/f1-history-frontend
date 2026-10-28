@@ -6,6 +6,7 @@ interface Driver {
   id: number;
   name: string;
   number: number;
+  photo?: string;
 }
 
 interface TeamDetail {
@@ -21,6 +22,30 @@ interface TeamDetail {
   color: string;
   drivers: Driver[];
 }
+
+// Fotos de los pilotos
+const driverPhotos: Record<number, string> = {
+  1: '/imagenes/pilotos/verstappen.jpg',
+  2: '/imagenes/pilotos/lawson.jpg',
+  3: '/imagenes/pilotos/leclerc.jpg',
+  4: '/imagenes/pilotos/hamilton.jpg',
+  5: '/imagenes/pilotos/norris.jpg',
+  6: '/imagenes/pilotos/piastri.jpg',
+  7: '/imagenes/pilotos/russell.jpg',
+  8: '/imagenes/pilotos/antonelli.jpg',
+  9: '/imagenes/pilotos/alonso.jpg',
+  10: '/imagenes/pilotos/stroll.jpg',
+  11: '/imagenes/pilotos/gasly.jpg',
+  12: '/imagenes/pilotos/colapinto.jpg',
+  13: '/imagenes/pilotos/ocon.jpg',
+  14: '/imagenes/pilotos/bearman.jpg',
+  15: '/imagenes/pilotos/tsunoda.jpg',
+  16: '/imagenes/pilotos/hadjar.jpg',
+  17: '/imagenes/pilotos/albon.jpg',
+  18: '/imagenes/pilotos/sainz.jpg',
+  19: '/imagenes/pilotos/bortoleto.jpg',
+  20: '/imagenes/pilotos/hulkenberg.jpg',
+};
 
 const teamsData: Record<string, TeamDetail> = {
   'mclaren': {
@@ -210,15 +235,7 @@ export default function TeamDetailPage() {
           ← Volver a escuderías
         </Link>
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-5xl font-bold mb-2">{team.name}</h1>
-          <p className="text-gray-400 italic text-lg">
-            Información del equipo · Temporada 2025
-          </p>
-        </div>
-
-        {/* Tarjeta destacada con posición y puntos */}
+        {/* Header CON LOGO */}
         <div 
           className="rounded-xl p-8 mb-12 flex items-center justify-between flex-wrap gap-4"
           style={{ 
@@ -227,12 +244,20 @@ export default function TeamDetailPage() {
           }}
         >
           <div className="flex items-center gap-6">
-            <div className="text-6xl font-black text-gray-700">#{team.position}</div>
+            <div className="bg-[#0a0e1a] rounded-lg p-4 h-24 w-32 flex items-center justify-center">
+              <img 
+                src={`/imagenes/teams/${team.id}.jpg`}
+                alt={`${team.name} logo`}
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            
             <div>
               <h2 className="text-3xl font-bold">{team.name}</h2>
               <p className="text-gray-400">Temporada 2025</p>
             </div>
           </div>
+          
           <div className="text-right">
             <div className="text-6xl font-black" style={{ color: team.color }}>
               {team.points}
@@ -243,60 +268,71 @@ export default function TeamDetailPage() {
 
         {/* Datos de la escudería */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          <div 
-            className="bg-[#1a1f2e] p-6 rounded-lg"
-            style={{ borderTop: `3px solid ${team.color}` }}
-          >
+          <div className="bg-[#1a1f2e] p-6 rounded-lg" style={{ borderTop: `3px solid ${team.color}` }}>
             <strong className="block text-sm text-gray-400 mb-2">Fundación</strong>
             <span className="text-2xl font-bold">{team.foundation}</span>
           </div>
-          <div 
-            className="bg-[#1a1f2e] p-6 rounded-lg"
-            style={{ borderTop: `3px solid ${team.color}` }}
-          >
+          <div className="bg-[#1a1f2e] p-6 rounded-lg" style={{ borderTop: `3px solid ${team.color}` }}>
             <strong className="block text-sm text-gray-400 mb-2">Base</strong>
             <span className="text-lg font-semibold">{team.base}</span>
           </div>
-          <div 
-            className="bg-[#1a1f2e] p-6 rounded-lg"
-            style={{ borderTop: `3px solid ${team.color}` }}
-          >
+          <div className="bg-[#1a1f2e] p-6 rounded-lg" style={{ borderTop: `3px solid ${team.color}` }}>
             <strong className="block text-sm text-gray-400 mb-2">Campeonatos</strong>
-            <span className="text-2xl font-bold">🏆 {team.championships}</span>
+            <span className="text-2xl font-bold"> {team.championships}</span>
           </div>
-          <div 
-            className="bg-[#1a1f2e] p-6 rounded-lg"
-            style={{ borderTop: `3px solid ${team.color}` }}
-          >
+          <div className="bg-[#1a1f2e] p-6 rounded-lg" style={{ borderTop: `3px solid ${team.color}` }}>
             <strong className="block text-sm text-gray-400 mb-2">Jefe de Equipo</strong>
             <span className="text-lg font-semibold">{team.teamPrincipal}</span>
           </div>
         </div>
 
-        {/* Pilotos 2025 */}
+        {/* Pilotos 2025 CON FOTOS */}
         <section className="mb-12">
           <h2 className="text-3xl font-bold mb-6" style={{ color: team.color }}>Pilotos 2025</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {team.drivers.map((driver) => (
-              <Link
-                key={driver.id}
-                href={`/pilotos/${driver.id}`}
-                className="bg-[#1a1f2e] p-6 rounded-lg hover:bg-[#252b3d] transition-all flex items-center gap-4"
-              >
-                <div 
-                  className="w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: team.color }}
+            {team.drivers.map((driver) => {
+              const photoUrl = driverPhotos[driver.id];
+              return (
+                <Link
+                  key={driver.id}
+                  href={`/pilotos/${driver.id}`}
+                  className="bg-[#1a1f2e] p-6 rounded-lg hover:bg-[#252b3d] transition-all flex items-center gap-4"
                 >
-                  <span className="text-white text-2xl font-black">#{driver.number}</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-1">
-                    {driver.name} <span style={{ color: team.color }}>#{driver.number}</span>
-                  </h3>
-                  <p className="text-sm text-gray-400">Ver perfil →</p>
-                </div>
-              </Link>
-            ))}
+                  {/* FOTO DEL PILOTO */}
+                  <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-4" style={{ borderColor: team.color }}>
+                    {photoUrl ? (
+                      <img 
+                        src={photoUrl}
+                        alt={driver.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const img = e.target as HTMLImageElement;
+                          img.style.display = 'none';
+                          if (img.parentElement) {
+                            img.parentElement.innerHTML = `
+                              <div class="w-full h-full flex items-center justify-center text-white text-2xl font-black" style="background-color: ${team.color}">
+                                #${driver.number}
+                              </div>
+                            `;
+                          }
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-white text-2xl font-black" style={{ backgroundColor: team.color }}>
+                        #{driver.number}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold mb-1">
+                      {driver.name} <span style={{ color: team.color }}>#{driver.number}</span>
+                    </h3>
+                    <p className="text-sm text-gray-400">Ver perfil →</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </section>
 
@@ -322,7 +358,6 @@ export default function TeamDetailPage() {
         </section>
       </div>
 
-      {/* Footer */}
       <footer className="bg-[#1a1f2e] py-8 text-center text-gray-400 mt-16">
         <p>© 2026 F1 History. Proyecto académico de Desarrollo Web.</p>
       </footer>
