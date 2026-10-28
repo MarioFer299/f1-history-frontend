@@ -207,7 +207,14 @@ const teams = [
   },
 ];
 
-// Next.js 15+: params es una Promesa en Server Components
+// 1. LE DECIMOS A NEXT.JS QUE GENESTAS 10 PÁGINAS ESTÁTICAMENTE EN EL BUILD
+export async function generateStaticParams() {
+  return teams.map((team) => ({
+    id: team.id,
+  }));
+}
+
+// 2. COMPONENTE DE SERVIDOR (Sin 'use client') que recibe params como Promesa
 export default async function TeamDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: teamId } = await params;
   const team = teams.find(t => t.id === teamId);
