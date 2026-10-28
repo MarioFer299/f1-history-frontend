@@ -2,6 +2,20 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
+// Logos oficiales de los equipos (URLs públicas de Wikimedia)
+const teamLogos: Record<string, string> = {
+  'mclaren': 'https://upload.wikimedia.org/wikipedia/en/thumb/6/67/McLaren_Racing_logo.svg/1200px-McLaren_Racing_logo.svg.png',
+  'ferrari': 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c6/Scuderia_Ferrari_Logo.svg/1200px-Scuderia_Ferrari_Logo.svg.png',
+  'redbull': 'https://upload.wikimedia.org/wikipedia/en/thumb/6/62/Red_Bull_Racing_logo.svg/1200px-Red_Bull_Racing_logo.svg.png',
+  'mercedes': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes_AMG_Petronas_F1_Team_Logo.svg/1200px-Mercedes_AMG_Petronas_F1_Team_Logo.svg.png',
+  'aston-martin': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Aston_Martin_F1_Team_logo.svg/1200px-Aston_Martin_F1_Team_logo.svg.png',
+  'alpine': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Alpine_F1_Team_Logo.svg/1200px-Alpine_F1_Team_Logo.svg.png',
+  'haas': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Haas_F1_Team_logo.svg/1200px-Haas_F1_Team_logo.svg.png',
+  'rb': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Visa_Cash_App_RB_Formula_One_Team_Logo.svg/1200px-Visa_Cash_App_RB_Formula_One_Team_Logo.svg.png',
+  'williams': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Williams_Racing_logo.svg/1200px-Williams_Racing_logo.svg.png',
+  'sauber': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Kick_Sauber_F1_Team_logo.svg/1200px-Kick_Sauber_F1_Team_logo.svg.png',
+};
+
 // Orden REAL del campeonato de constructores 2025
 const teams = [
   {
@@ -206,7 +220,7 @@ export default function EscuderiasPage() {
           </button>
         </div>
 
-        {/* Grid de escuderías - DISEÑO TIPO PILOTOS */}
+        {/* Grid de escuderías con LOGOS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredTeams.map((team) => (
             <Link
@@ -216,24 +230,47 @@ export default function EscuderiasPage() {
               style={{ borderColor: team.color }}
             >
               <div className="text-center">
-                <div className="text-5xl font-black mb-3" style={{ color: team.color }}>
+                {/* LOGO DEL EQUIPO */}
+                <div className="bg-[#0a0e1a] rounded-lg p-3 mb-4 h-24 flex items-center justify-center overflow-hidden">
+                  <img 
+                    src={teamLogos[team.id]} 
+                    alt={`${team.name} logo`} 
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+                
+                {/* Posición pequeña */}
+                <div className="text-sm font-bold mb-1" style={{ color: team.color }}>
                   #{team.position}
                 </div>
+                
+                {/* Nombre */}
                 <h2 className="text-xl font-bold mb-2 text-white group-hover:text-gray-200 transition">
                   {team.name}
                 </h2>
+                
+                {/* Puntos */}
                 <p className="text-sm font-semibold mb-1" style={{ color: team.color }}>
                   {team.points} pts
                 </p>
+                
+                {/* Base */}
                 <p className="text-gray-500 text-xs mb-4">{team.base}</p>
                 
                 {/* Pilotos */}
-                <div className="space-y-1">
+                <div className="space-y-1 border-t border-gray-700 pt-3">
                   {team.drivers.map((driver, idx) => (
                     <div key={idx} className="text-xs text-gray-400">
                       #{driver.number} {driver.name}
                     </div>
                   ))}
+                </div>
+
+                {/* Ver más */}
+                <div className="mt-4">
+                  <span className="text-sm font-semibold group-hover:underline" style={{ color: team.color }}>
+                    Ver más →
+                  </span>
                 </div>
               </div>
             </Link>

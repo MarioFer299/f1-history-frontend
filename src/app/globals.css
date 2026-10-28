@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Esta línea le dice a Tailwind v4 que use la clase "dark" en lugar del sistema */
+/* Configura Tailwind para que use la clase "dark" manualmente */
 @variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -8,20 +8,20 @@
   --foreground: #171717;
 }
 
+/* Cuando la clase "dark" está presente, usa estos colores */
+.dark {
+  --background: #0a0e1a;
+  --foreground: #ededed;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

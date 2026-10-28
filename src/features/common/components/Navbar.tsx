@@ -8,12 +8,12 @@ export function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
+    // 1. Leer preferencia guardada o usar oscuro por defecto
     const savedMode = localStorage.getItem('darkMode');
-    if (savedMode !== null) {
-      const isDark = savedMode === 'true';
-      setDarkMode(isDark);
-      applyDarkMode(isDark);
-    }
+    const isDark = savedMode !== null ? savedMode === 'true' : true;
+    
+    setDarkMode(isDark);
+    applyDarkMode(isDark);
   }, []);
 
   const applyDarkMode = (isDark: boolean) => {
@@ -45,7 +45,7 @@ export function Navbar() {
   }
 
   return (
-    <nav className="bg-gray-900 dark:bg-gray-950 text-white p-4 shadow-lg sticky top-0 z-50">
+    <nav className="bg-gray-900 dark:bg-gray-950 text-white p-4 shadow-lg sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
           F1 <span className="text-red-600">HISTORY</span>
@@ -54,7 +54,7 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-6">
           <Link href="/" className="hover:text-red-500 transition">Inicio</Link>
           <Link href="/pilotos" className="hover:text-red-500 transition">Pilotos</Link>
-          <Link href="/#escuderias" className="hover:text-red-500 transition">Escuderías</Link>
+          <Link href="/escuderias" className="hover:text-red-500 transition">Escuderías</Link>
           <Link href="/historia" className="hover:text-red-500 transition">Historia</Link>
           <Link href="/contacto" className="hover:text-red-500 transition">Contacto</Link>
 
