@@ -1,5 +1,3 @@
-'use client';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
 interface Driver {
@@ -210,9 +208,14 @@ const teamsData: Record<string, TeamDetail> = {
   }
 };
 
-export default function TeamDetailPage() {
-  const params = useParams();
-  const teamId = params.id as string;
+// 1. LE DECIMOS A NEXT.JS QUE GENERE ESTAS 10 PÁGINAS ESTÁTICAMENTE EN EL BUILD
+export async function generateStaticParams() {
+  return Object.keys(teamsData).map((id) => ({ id }));
+}
+
+// 2. COMPONENTE DE SERVIDOR (Sin 'use client') que recibe params como Promesa
+export default async function TeamDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: teamId } = await params;
   const team = teamsData[teamId];
 
   if (!team) {
