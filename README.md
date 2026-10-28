@@ -1,4 +1,4 @@
-### 📄 2. Contenido para `f1-history-frontend/README.md`
+### 📄 2. Contenido 
 
 # 🏎️ F1 History - Frontend
 
