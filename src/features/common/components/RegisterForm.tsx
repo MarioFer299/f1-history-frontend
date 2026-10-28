@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../../auth/hooks/useAuth'; // <-- CORREGIDO: subimos dos niveles
 import Link from 'next/link';
 
 export function RegisterForm() {

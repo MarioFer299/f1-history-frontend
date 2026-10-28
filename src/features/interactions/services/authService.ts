@@ -1,5 +1,6 @@
 import { http } from '../../common/http';
-import { AuthResponse, LoginRequest, RegisterRequest } from '../domain/types';
+// CORREGIDO: Agregamos 'User' a la importación de tipos
+import { AuthResponse, LoginRequest, RegisterRequest, User } from '../domain/types'; 
 
 export const authService = {
   login: (data: LoginRequest) => http<AuthResponse>('/api/auth/login', {
