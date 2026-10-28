@@ -1,5 +1,5 @@
 import { http } from '../../common/http';
-import { AuthResponse, LoginRequest, RegisterRequest } from '../domain/types';
+import { AuthResponse, LoginRequest, RegisterRequest, User } from '../domain/types';
 
 export const authService = {
   login: (data: LoginRequest) => http<AuthResponse>('/api/auth/login', {
@@ -15,13 +15,27 @@ export const authService = {
   }),
 
   logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    }
   },
 
   getCurrentUser: (): User | null => {
     if (typeof window === 'undefined') return null;
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+    const userStr = localStorage.getItem('user');
+    
+    // Protección contra valores corruptos como "undefined" o "null"
+    if (!userStr || userStr === 'undefined' || userStr === 'null') {
+      localStorage.removeItem('user');
+      return null;
+    }
+    
+    try {
+      return JSON.parse(userStr);
+    } catch (error) {
+      localStorage.removeItem('user');
+      return null;
+    }
   },
 };
