@@ -1,5 +1,3 @@
-'use client';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -202,9 +200,17 @@ const driverPhotos: Record<number, string> = {
   20: '/imagenes/pilotos/hulkenberg.jpg',
 };
 
-export default function DriverDetailPage() {
-  const params = useParams();
-  const driverId = typeof params.id === 'string' ? parseInt(params.id) : 0;
+// 1. LE DECIMOS A NEXT.JS QUE GENERE ESTAS 20 PÁGINAS ESTÁTICAMENTE EN EL BUILD
+export async function generateStaticParams() {
+  return drivers.map((driver) => ({
+    id: driver.id.toString(),
+  }));
+}
+
+// 2. COMPONENTE DE SERVIDOR (Sin 'use client') que recibe params como Promesa
+export default async function DriverDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: driverIdStr } = await params;
+  const driverId = parseInt(driverIdStr, 10);
   const driver = drivers.find(d => d.id === driverId);
 
   if (!driver) {
